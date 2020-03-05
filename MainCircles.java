@@ -11,7 +11,7 @@ public class MainCircles extends JFrame {
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
 
-    private Sprite[] sprites;
+    private Sprite[] sprites = new Sprite[1000];        //Максимальное к-во шариков пусть будет тыща
     private int spritesNum = 1;                         //Начальное количество шариков. Пусть будет 1.
     private BackGround backGround = new BackGround();
 
@@ -38,12 +38,12 @@ public class MainCircles extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if(e.getButton() == MouseEvent.BUTTON1){           //Левой кнопкой добавляем к-во шариков
                     spritesNum++;
+                    sprites[spritesNum-1] = new Ball();
                 } else if (e.getButton() == MouseEvent.BUTTON3) { //Правой кнопкой уменьшаем к-во шариков
                     if(spritesNum > 0) {
                         spritesNum--;
                     }
                 }
-                initApplication();
             }
         });
 
@@ -51,8 +51,7 @@ public class MainCircles extends JFrame {
     }
 
     private void initApplication() {
-        sprites = new Sprite[spritesNum]; //Создадим к-во шариков исходя их того, сколько накликали мышкой
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < spritesNum; i++) {
             sprites[i] = new Ball();
         }
 
@@ -65,7 +64,7 @@ public class MainCircles extends JFrame {
 
     private void update(MainCanvas canvas, float deltaTime) {
         backGround.update(canvas, deltaTime);               //Добавляем изменения бекграунда
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < spritesNum; i++) {
             sprites[i].update(canvas, deltaTime);
         }
 
@@ -73,7 +72,7 @@ public class MainCircles extends JFrame {
 
     private void render(MainCanvas canvas, Graphics g) {
         backGround.render(canvas, g);                       //Добавляем отрисовку бэкгранда
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < spritesNum; i++) {
             sprites[i].render(canvas, g);
         }
 
